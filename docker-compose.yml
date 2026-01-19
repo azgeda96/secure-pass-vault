@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  vault-access:
+    build: .
+    container_name: vault-access
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault-access.rule=Host(`vault.example.com`)"
+      - "traefik.http.routers.vault-access.tls=true"
+      - "traefik.http.routers.vault-access.tls.certresolver=letsencrypt"
