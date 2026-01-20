@@ -143,13 +143,13 @@ BEGIN
         CREATE ROLE service_role NOLOGIN NOINHERIT BYPASSRLS;
     END IF;
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'authenticator') THEN
-        CREATE ROLE authenticator NOINHERIT LOGIN PASSWORD 'your-super-secret-password';
+        CREATE ROLE authenticator NOINHERIT LOGIN PASSWORD 'VaultSecretPassword123!';
     END IF;
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_auth_admin') THEN
-        CREATE ROLE supabase_auth_admin NOINHERIT LOGIN PASSWORD 'your-super-secret-password';
+        CREATE ROLE supabase_auth_admin NOINHERIT LOGIN PASSWORD 'VaultSecretPassword123!';
     END IF;
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_admin') THEN
-        CREATE ROLE supabase_admin NOINHERIT LOGIN PASSWORD 'your-super-secret-password';
+        CREATE ROLE supabase_admin NOINHERIT LOGIN PASSWORD 'VaultSecretPassword123!';
     END IF;
 END
 $$;
