@@ -81,18 +81,30 @@ docker-compose logs -f
 
 ## 🔧 Configuration
 
-### Update Frontend Supabase Client
+### Variables d'Environnement Frontend
 
-After deployment, update `src/integrations/supabase/client.ts`:
+Le client Supabase utilise automatiquement les variables Vite :
 
-```typescript
-import { createClient } from '@supabase/supabase-js';
+| Variable | Description |
+|----------|-------------|
+| `VITE_SUPABASE_URL` | URL de l'API Supabase |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Clé publique (anon key) |
 
-const supabaseUrl = 'http://localhost:8000'; // Your API Gateway URL
-const supabaseAnonKey = 'your-anon-key-from-env';
+### Basculer entre Cloud et Auto-hébergé
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+**Lovable Cloud** (développement) - dans `.env` :
+```env
+VITE_SUPABASE_URL=https://edycehfsnvgvrojjdrcs.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkeWNlaGZzbnZndnJvampkcmNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3OTYwMDIsImV4cCI6MjA4NDM3MjAwMn0.chnSnkhdmbohjhyAuTsuYZ-2kWkWLiaovcJfR7LpGk0
 ```
+
+**Auto-hébergé** (production) - dans `.env` :
+```env
+VITE_SUPABASE_URL=http://localhost:8000
+VITE_SUPABASE_PUBLISHABLE_KEY=votre-anon-key-générée
+```
+
+Le client dans `src/integrations/supabase/client.ts` lit automatiquement ces variables - **aucune modification de code n'est nécessaire** !
 
 ### Production Deployment
 
@@ -108,6 +120,7 @@ Example with custom domain:
 ```env
 API_EXTERNAL_URL=https://api.yourdomain.com
 SITE_URL=https://vault.yourdomain.com
+VITE_SUPABASE_URL=https://api.yourdomain.com
 ```
 
 ## 🔐 Security Checklist
